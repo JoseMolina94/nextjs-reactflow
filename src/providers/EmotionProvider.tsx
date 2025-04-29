@@ -2,7 +2,7 @@
 
 import { CacheProvider } from '@emotion/react';
 import { ReactNode } from 'react';
-import createEmotionCache from './createEmotionCache';
+import createEmotionCache from '@/helpers/emotion/createEmotionCache';
 import { useState } from 'react';
 
 interface EmotionProviderProps {
