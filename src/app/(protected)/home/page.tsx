@@ -1,17 +1,21 @@
-'use client';
+'use client'
 
-import { useAuthStore, AuthState } from '../../../store/authStore';
-import { useRouter } from 'next/navigation';
-import { Container, Typography, Button, Box } from '@mui/material';
+import { useAuthStore, AuthState } from '../../../store/authStore'
+import { useRouter } from 'next/navigation'
+import { Container, Typography, Button, Box } from '@mui/material'
 
 export default function HomePrivatePage() {
   const { userEmail, logout } = useAuthStore((state: AuthState) => state)
   const router = useRouter()
 
   const handleLogout = () => {
-    logout();
-    router.replace('/');
-  };
+    logout()
+    router.replace('/')
+  }
+
+  const goToCreateFlow = () => {
+    router.push('/flow/create')
+  }
 
   return (
     <Container maxWidth="sm" sx={{ mt: 8 }}>
@@ -26,7 +30,7 @@ export default function HomePrivatePage() {
       </Typography>
 
       <Box sx={{ display: 'flex', gap: 2, justifyContent: 'center' }} >
-        <Button variant="contained" color="primary" onClick={handleLogout} sx={{ mt: 4 }}>
+        <Button variant="contained" color="primary" onClick={goToCreateFlow} sx={{ mt: 4 }}>
           Crear nuevo
         </Button>
         <Button variant="outlined" color="secondary" onClick={handleLogout} sx={{ mt: 4 }}>
@@ -34,5 +38,5 @@ export default function HomePrivatePage() {
         </Button>
       </Box>
     </Container>
-  );
+  )
 }
