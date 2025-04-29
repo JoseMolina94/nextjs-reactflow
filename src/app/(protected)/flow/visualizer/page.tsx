@@ -1,15 +1,22 @@
 'use client'
 
-import { useCallback, useMemo } from 'react'
+import { useCallback, useMemo, useState } from 'react'
 import ReactFlow, { Background, Controls, MiniMap, Node, Edge, useNodesState, useEdgesState, addEdge } from 'reactflow'
 import { useFlowStore } from '@/store/flowStore'
 
 import 'reactflow/dist/style.css'
 import CustomNode from '@/components/CustomNodes'
 import { Box } from '@mui/material'
+import EditNodeModal from '@/components/EditNodeModal'
 
 export default function FlowVisualizer() {
   const { textsNode, mediaNode, noteNode } = useFlowStore()
+  const [selectedNode, setSelectedNode] = useState<string | null>(null);
+  const [isEditing, setIsEditing] = useState(false);
+
+  const nodeTypes = useMemo(() => ({
+    custom: CustomNode,
+  }), [])
 
   const initialNodes: Node[] = useMemo(() => [
     {
@@ -41,6 +48,11 @@ export default function FlowVisualizer() {
   const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges);
   const onConnect = useCallback((params: any) => setEdges((eds) => addEdge(params, eds)), []);
 
+  const handleNodeClick = useCallback((_: React.MouseEvent, node: Node) => {
+    setSelectedNode(node.id);
+    setIsEditing(true);
+  }, []);
+
   return (
     <Box sx={{ width: '100%', height: '80vh' }}>
       <ReactFlow
@@ -49,13 +61,21 @@ export default function FlowVisualizer() {
         onNodesChange={onNodesChange}
         onEdgesChange={onEdgesChange}
         onConnect={onConnect}
-        nodeTypes={{ custom: CustomNode }}
+        nodeTypes={nodeTypes}
+        onNodeClick={handleNodeClick}
         fitView
       >
         <Background />
         <MiniMap />
         <Controls />
       </ReactFlow>
+
+      <EditNodeModal
+        isEditing={isEditing}
+        setIsEditing={setIsEditing}
+        selectedNode={selectedNode || null}
+        setNodes={setNodes}
+      />
     </Box>
   )
 }
