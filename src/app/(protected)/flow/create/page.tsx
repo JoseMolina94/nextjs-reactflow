@@ -4,6 +4,9 @@ import { useState } from 'react'
 import { Tabs, Tab, Box, Button, TextField, MenuItem } from '@mui/material'
 import { useRouter } from 'next/navigation'
 import { useFlowStore } from '@/store/flowStore'
+import TextsForm from '@/components/TextsForm'
+import MediaForm from '@/components/MediaForm'
+import NoteNodeForm from '@/components/NoteNodeForm'
 
 export default function FlowForm() {
   const [step, setStep] = useState(0)
@@ -11,7 +14,7 @@ export default function FlowForm() {
 
   const {
     section1, section2, section3,
-    updateSection1, updateSection2, updateSection3
+    updateSection2, updateSection3
   } = useFlowStore()
 
   const isSectionValid = () => {
@@ -31,11 +34,11 @@ export default function FlowForm() {
 
   const handleCreate = () => {
     console.log('Creando flujo con:', { section1, section2, section3 })
-    
+
     // TODO: simular un POST
     // await fetch('/api/flows', { method: 'POST', body: JSON.stringify(...) })
 
-    router.push('/flow/visualizer') 
+    router.push('/flow/visualizer')
   }
 
   return (
@@ -47,59 +50,15 @@ export default function FlowForm() {
       </Tabs>
 
       {step === 0 && (
-        <Box mt={3} display="flex" flexDirection="column" gap={2}>
-          <TextField
-            label="Título"
-            value={section1.title}
-            onChange={(e) => updateSection1({ title: e.target.value })}
-            fullWidth
-          />
-          <TextField
-            label="Descripción"
-            value={section1.description}
-            onChange={(e) => updateSection1({ description: e.target.value })}
-            fullWidth
-            multiline
-          />
-        </Box>
+        <TextsForm />
       )}
 
       {step === 1 && (
-        <Box mt={3} display="flex" flexDirection="column" gap={2}>
-          <TextField
-            label="URL de imagen o video"
-            value={section2.mediaUrl}
-            onChange={(e) => updateSection2({ mediaUrl: e.target.value })}
-            fullWidth
-          />
-          <TextField
-            select
-            label="Tipo de medio"
-            value={section2.mediaType}
-            onChange={(e) => updateSection2({ mediaType: e.target.value as 'image' | 'video' })}
-            fullWidth
-          >
-            <MenuItem value="image">Imagen</MenuItem>
-            <MenuItem value="video">Video</MenuItem>
-          </TextField>
-        </Box>
+        <MediaForm />
       )}
 
       {step === 2 && (
-        <Box mt={3} display="flex" flexDirection="column" gap={2}>
-          <TextField
-            label="Nota"
-            value={section3.note}
-            onChange={(e) => updateSection3({ note: e.target.value })}
-            fullWidth
-          />
-          <TextField
-            label="Enlace"
-            value={section3.link}
-            onChange={(e) => updateSection3({ link: e.target.value })}
-            fullWidth
-          />
-        </Box>
+        <NoteNodeForm />
       )}
 
       <Box mt={4} display="flex" justifyContent="space-between">
