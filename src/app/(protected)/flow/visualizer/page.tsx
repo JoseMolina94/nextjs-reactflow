@@ -9,28 +9,28 @@ import CustomNode from '@/components/CustomNodes'
 import { Box } from '@mui/material'
 
 export default function FlowVisualizer() {
-  const { section1, section2, section3 } = useFlowStore()
+  const { textsNode, mediaNode, noteNode } = useFlowStore()
 
   const initialNodes: Node[] = useMemo(() => [
     {
       id: '1',
       type: 'custom',
-      data: section1,
+      data: textsNode,
       position: { x: 100, y: 100 },
     },
     {
       id: '2',
       type: 'custom',
-      data: section2,
-      position: { x: 350, y: 100 },
+      data: mediaNode,
+      position: { x: 350, y: 150 },
     },
     {
       id: '3',
       type: 'custom',
-      data: section3,
-      position: { x: 600, y: 100 },
+      data: noteNode,
+      position: { x: 600, y: 200 },
     },
-  ], [section1, section2, section3])
+  ], [textsNode, mediaNode, noteNode])
 
   const initialEdges: Edge[] = useMemo(() => [
     { id: 'e1-2', source: '1', target: '2', animated: true },

@@ -13,15 +13,15 @@ export default function FlowForm() {
   const router = useRouter()
 
   const {
-    section1,
-    section2,
-    section3
+    textsNode,
+    mediaNode,
+    noteNode
   } = useFlowStore()
 
   const isSectionValid = () => {
-    if (step === 0) return section1.title && section1.description
-    if (step === 1) return section2.mediaUrl && section2.mediaType
-    if (step === 2) return section3.note && section3.link
+    if (step === 0) return textsNode.title && textsNode.description
+    if (step === 1) return mediaNode.mediaUrl && mediaNode.mediaType && mediaNode.caption
+    if (step === 2) return noteNode.note && noteNode.link
     return false
   }
 
@@ -34,7 +34,7 @@ export default function FlowForm() {
   }
 
   const handleCreate = async () => {
-    const payload = { section1, section2, section3 }
+    const payload = { textsNode, mediaNode, noteNode }
   
     try {
       const res = await fetch('/api/flow/create', {

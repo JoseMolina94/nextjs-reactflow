@@ -1,32 +1,33 @@
 import { create } from 'zustand'
 
-type Section1 = { 
+type TextsNode = { 
   title: string 
   description: string 
 }
-type Section2 = { 
+type MediaNode = { 
   mediaUrl: string 
   mediaType: 'image' | 'video' 
+  caption: string
 }
-type Section3 = { 
+type NoteNode = { 
   note: string 
   link: string 
 }
 
 type FlowState = {
-  section1: Section1
-  section2: Section2
-  section3: Section3
-  updateSection1: (data: Partial<Section1>) => void
-  updateSection2: (data: Partial<Section2>) => void
-  updateSection3: (data: Partial<Section3>) => void
+  textsNode: TextsNode
+  mediaNode: MediaNode
+  noteNode: NoteNode
+  updateTextsNode: (data: Partial<TextsNode>) => void
+  updateMediaNode: (data: Partial<MediaNode>) => void
+  updateNoteNode: (data: Partial<NoteNode>) => void
 }
 
 export const useFlowStore = create<FlowState>((set) => ({
-  section1: { title: '', description: '' },
-  section2: { mediaUrl: '', mediaType: 'image' },
-  section3: { note: '', link: '' },
-  updateSection1: (data) => set((state) => ({ section1: { ...state.section1, ...data } })),
-  updateSection2: (data) => set((state) => ({ section2: { ...state.section2, ...data } })),
-  updateSection3: (data) => set((state) => ({ section3: { ...state.section3, ...data } })),
+  textsNode: { title: '', description: '' },
+  mediaNode: { mediaUrl: '', caption: '', mediaType: 'image'},
+  noteNode: { note: '', link: '' },
+  updateTextsNode: (data) => set((state) => ({ textsNode: { ...state.textsNode, ...data } })),
+  updateMediaNode: (data) => set((state) => ({ mediaNode: { ...state.mediaNode, ...data } })),
+  updateNoteNode: (data) => set((state) => ({ noteNode: { ...state.noteNode, ...data } })),
 }))
