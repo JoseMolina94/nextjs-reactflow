@@ -20,7 +20,7 @@ Una aplicación construida con **Next.js**, **React**, **TypeScript** y **Zustan
 
 ## Tecnologías utilizadas
 
-- [Next.js 14+](https://nextjs.org/)
+- [Next.js 15+](https://nextjs.org/)
 - [React](https://reactjs.org/)
 - [TypeScript](https://www.typescriptlang.org/)
 - [Zustand](https://zustand-demo.pmnd.rs/)
