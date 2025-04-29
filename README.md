@@ -38,3 +38,4 @@ Clona el repositorio e instala las dependencias:
 git clone https://github.com/tu-usuario/tu-repo.git
 cd tu-repo
 npm install
+npm run dev
