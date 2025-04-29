@@ -9,8 +9,8 @@ Una aplicación construida con **Next.js**, **React**, **TypeScript** y **Zustan
 - Rutas públicas y protegidas.
 - Formulario dividido en tres secciones con validaciones:
   - Texto (Título + Descripción)
-  - Imagen o Video
-  - Nota + Enlace (o carga desde archivo `.txt`)
+  - Imagen o Video, con texto de descripción
+  - Nota + Enlace (cargando desde un archivo `.txt`)
 - Manejo de estado global con Zustand.
 - Visualización del flujo mediante nodos interactivos en React Flow.
 - Edición de nodos con persistencia en el store.

@@ -61,7 +61,7 @@ export default function MediaForm() {
       )}
 
       <TextField
-        label="Píe de imagen"
+        label="Texto de descripción"
         value={mediaNode.caption}
         onChange={(e) => updateMediaNode({ caption: e.target.value })}
         fullWidth
