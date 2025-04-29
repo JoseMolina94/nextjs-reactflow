@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { Tabs, Tab, Box, Button, TextField, MenuItem } from '@mui/material'
+import { Tabs, Tab, Box, Button } from '@mui/material'
 import { useRouter } from 'next/navigation'
 import { useFlowStore } from '@/store/flowStore'
 import TextsForm from '@/components/TextsForm'
@@ -13,8 +13,9 @@ export default function FlowForm() {
   const router = useRouter()
 
   const {
-    section1, section2, section3,
-    updateSection2, updateSection3
+    section1,
+    section2,
+    section3
   } = useFlowStore()
 
   const isSectionValid = () => {
@@ -32,13 +33,30 @@ export default function FlowForm() {
     if (step > 0) setStep((prev) => prev - 1)
   }
 
-  const handleCreate = () => {
-    console.log('Creando flujo con:', { section1, section2, section3 })
-
-    // TODO: simular un POST
-    // await fetch('/api/flows', { method: 'POST', body: JSON.stringify(...) })
-
-    router.push('/flow/visualizer')
+  const handleCreate = async () => {
+    const payload = { section1, section2, section3 }
+  
+    try {
+      const res = await fetch('/api/flow/create', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(payload),
+      })
+  
+      const data = await res.json()
+      console.log('Respuesta del backend:', data)
+  
+      if (data.success) {
+        router.push('/flow/visualizer')
+      } else {
+        alert('Algo salió mal creando el flujo.')
+      }
+    } catch (error) {
+      console.error('Error al crear flujo:', error)
+      alert('Error de red o del servidor.')
+    }
   }
 
   return (
@@ -48,7 +66,7 @@ export default function FlowForm() {
         <Tab label="Sección 2" />
         <Tab label="Sección 3" />
       </Tabs>
-
+      
       {step === 0 && (
         <TextsForm />
       )}
